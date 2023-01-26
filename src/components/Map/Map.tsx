@@ -3,16 +3,16 @@ import styled from "@emotion/styled";
 import { EUROPE_DATA } from "./mapData";
 
 function Map() {
-	// const [showName, setShowName] = useState(false);
-	// const [currentCountry, setCurrentCountry] = useState("");
 	const [hoveredCountry, setHoveredCountry] = useState("");
+	const [selectedCountry, setSelectedCountry] = useState<string[]>([]);
 
-	const cursorRef = useRef(null);
-	const followMouse = (e) => {
+	const cursorRef = useRef<HTMLDivElement>(null);
+	const followMouse = (e: any) => {
 		const x = e.clientX;
 		const y = e.clientY;
 
-		cursorRef.current.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+		cursorRef.current &&
+			(cursorRef.current.style.transform = `translate3d(${x}px, ${y}px, 0)`);
 	};
 
 	useEffect(() => {
@@ -22,6 +22,16 @@ function Map() {
 			window.removeEventListener("mousemove", followMouse);
 		};
 	}, []);
+
+	const handleCountryClick = (name: string) => {
+		const newSelectedCountry = [...selectedCountry];
+		if (newSelectedCountry.includes(name)) {
+			newSelectedCountry.splice(newSelectedCountry.indexOf(name), 1);
+		} else {
+			newSelectedCountry.push(name);
+		}
+		setSelectedCountry(newSelectedCountry);
+	};
 
 	return (
 		<MapGlobal>
@@ -44,14 +54,17 @@ function Map() {
 									onMouseOut={() => {
 										setHoveredCountry("");
 									}}
+									onClick={() => handleCountryClick(item.name)}
 									className="st1"
 									d={item.d}
 									transform={item.transform}
 									strokeWidth="1.1119186046511627"
 									fillOpacity="1"
 									fill={
-										hoveredCountry === item.name
+										selectedCountry.includes(item.name)
 											? "rgb(62,185,127)"
+											: hoveredCountry === item.name
+											? "rgb(220, 220, 220)"
 											: "rgb(250,250,250)"
 									}
 									stroke="rgb(0,0,0)"
@@ -73,26 +86,7 @@ function Map() {
 				>
 					{hoveredCountry ? hoveredCountry : null}
 				</div>
-				<p>
-					{
-						"Pour compléter ta carte de l'Europe, tu peux cocher le pays que tu as déjà visité ou tu peux le chercher dans la barre de recherche :"
-					}
-				</p>
-				<br />
-				<input placeholder="Rechercher un pays" />
-				<br />
-				<p>
-					{
-						" Si tu veux sauvegarder ta propre carte de l'Europe, tu peux te connecter !"
-					}
-				</p>
-				<br />
-				<p>Si tu ne possède pas encore de compte, pas de soucis.</p>
-				<br />
-				<p>
-					Visite des pays, prends des photos souvenirs, partage tes aventures et
-					gagne des récompenses !
-				</p>
+				<div>Nombre de pays sélectionnés : {selectedCountry.length}</div>
 			</div>
 		</MapGlobal>
 	);
@@ -195,3 +189,26 @@ const MapGlobal = styled.div`
 		border-radius: 5px;
 	}
 `;
+
+/*
+				<p>
+					{
+						"Pour compléter ta carte de l'Europe, tu peux cocher le pays que tu as déjà visité ou tu peux le chercher dans la barre de recherche :"
+					}
+				</p>
+				<br />
+				<input placeholder="Rechercher un pays" />
+				<br />
+				<p>
+					{
+						" Si tu veux sauvegarder ta propre carte de l'Europe, tu peux te connecter !"
+					}
+				</p>
+				<br />
+				<p>Si tu ne possède pas encore de compte, pas de soucis.</p>
+				<br />
+				<p>
+					Visite des pays, prends des photos souvenirs, partage tes aventures et
+					gagne des récompenses !
+				</p>
+*/

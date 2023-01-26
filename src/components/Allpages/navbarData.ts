@@ -24,7 +24,7 @@ export const NAVBAR_DATA_LAPTOP: NavbarDataLaptop[] = [
 	{
 		id: 2,
 		name: "Messages",
-		path: "/messages",
+		path: "/conversations",
 	},
 	{
 		id: 3,

@@ -9,6 +9,7 @@ export default function App({
 }: AppProps) {
 	return (
 		<SessionProvider session={session}>
+			
 			<Navbar />
 			<Component {...pageProps} />
 		</SessionProvider>

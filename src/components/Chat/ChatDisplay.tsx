@@ -36,6 +36,7 @@ const ChatDisplayGlobal = styled.div`
 			width: 60%;
 			max-width: 40px;
 			height: auto;
+			border-radius: 50px;
 
 			@media (max-width: 600px) {
 				max-width: 30px;
@@ -55,7 +56,6 @@ const ChatDisplayGlobal = styled.div`
 
 		.Message {
 			background-color: rgb(51, 128, 109);
-
 			color: white;
 			border-radius: 80px 80px 80px 0px;
 			padding: 8px 15px;

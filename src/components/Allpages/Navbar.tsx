@@ -9,6 +9,9 @@ import UserImage from "../../assets/user.png";
 
 function Navbar() {
 	const { data: session } = useSession();
+
+	console.log("la session :", session);
+
 	return (
 		<NavbarGlobal>
 			<div className="LaptopNavbar">

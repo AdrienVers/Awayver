@@ -1,7 +1,7 @@
 import { signIn } from "next-auth/react";
 import React, { FormEventHandler, useState } from "react";
 import styled from "@emotion/styled";
-import SignInPicture from "../assets/SignUpForm.jpg";
+import SignInPicture from "../assets/SignUpForm.png";
 import Image from "next/image";
 import Link from "next/link";
 
