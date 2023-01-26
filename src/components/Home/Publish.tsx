@@ -9,17 +9,14 @@ function Publish() {
 		<PublishGlobal>
 			<div className="ShareInput">
 				<Image className="SharePicture" src={User} alt="Utilisateur" />
-				<input
-					type="text"
-					placeholder="Envie de partager avec les autres, John ?"
-				/>
+				<input type="text" placeholder="Envie de partager, John ?" />
 			</div>
 			<div className="ShareIllustrations">
 				{PUBLISH_DATA.map((item: any) => {
 					return (
-						<span key={item.id} className="ShareEvent">
-							<i className={item.icon} /> {item.name}
-						</span>
+						<p key={item.id} className="ShareEvent">
+							<i className={item.icon} /> <span>{item.name}</span>
+						</p>
 					);
 				})}
 				<button>Publier</button>
@@ -40,6 +37,11 @@ const PublishGlobal = styled.div`
 	padding: 30px 40px 25px 40px;
 	border-radius: 20px;
 
+	@media (max-width: 600px) {
+		width: 90%;
+		padding: 10px;
+	}
+
 	.ShareInput {
 		width: 100%;
 		display: flex;
@@ -50,6 +52,12 @@ const PublishGlobal = styled.div`
 			height: 50px;
 			border-radius: 50px;
 			margin: 10px 20px 10px 15px;
+
+			@media (max-width: 600px) {
+				width: 40px;
+				height: 40px;
+				border-radius: 40px;
+			}
 		}
 
 		input {
@@ -60,6 +68,11 @@ const PublishGlobal = styled.div`
 			font-size: 1.05rem;
 			border: none;
 			box-shadow: inset 0px 0px 0px 0.5px black;
+
+			@media (max-width: 600px) {
+				width: calc(100% - 90px);
+				height: 40px;
+			}
 		}
 	}
 
@@ -73,6 +86,7 @@ const PublishGlobal = styled.div`
 		padding: 10px 0px;
 
 		.ShareEvent {
+			margin: 0;
 			i {
 				color: rgb(50, 130, 110);
 				padding-right: 8px;
@@ -80,6 +94,12 @@ const PublishGlobal = styled.div`
 
 			&:hover {
 				cursor: pointer;
+			}
+
+			span {
+				@media (max-width: 1000px) {
+					display: none;
+				}
 			}
 		}
 
@@ -95,6 +115,11 @@ const PublishGlobal = styled.div`
 
 			&:hover {
 				cursor: pointer;
+			}
+
+			@media (max-width: 600px) {
+				font-size: 1rem;
+				padding: 8px 10px;
 			}
 		}
 	}

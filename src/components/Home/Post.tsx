@@ -19,15 +19,16 @@ function Post({
 			<div className="PostHeader">
 				<div className="PostProfil">
 					<Image className="PostPicture" src={ownerPicture} alt="Utilisateur" />
-					<span>{owner}</span>
-					<span style={{ padding: "0px 15px" }}> | </span>
-					<span style={{ color: "rgb(50, 130, 110)" }}>
-						<i style={{ paddingRight: "5px" }} className={icon} /> {category}
-					</span>
+					<p>{owner}</p>
+					<p style={{ padding: "0px 15px" }}> | </p>
+					<p style={{ color: "rgb(50, 130, 110)" }}>
+						<i style={{ paddingRight: "5px" }} className={icon} />{" "}
+						<span>{category}</span>
+					</p>
 				</div>
 				<i className="fa-solid fa-xmark" />
 			</div>
-			<div className="PostSeparation" style={{ margin: "5px 0px 20px 0px" }} />
+			<div className="PostSeparationHeader" />
 			<div className="PostContent">
 				<div className="PostText">
 					<p>{content}</p>
@@ -41,7 +42,7 @@ function Post({
 					<Image className="Image" src={image} alt="Budapest" />
 				</div>
 			</div>
-			<div className="PostSeparation" style={{ margin: "20px 0px 10px 0px" }} />
+			<div className="PostSeparationContent" />
 			<div className="PostReaction">
 				<span>
 					<i className="fa-solid fa-thumbs-up" />
@@ -49,13 +50,13 @@ function Post({
 				</span>
 				<span>{commentsNumber} commentaires</span>
 			</div>
-			<div className="PostSeparation" style={{ margin: "10px 0px 10px 0px" }} />
+			<div className="PostSeparationFooter" />
 			<div className="PostFooter">
 				{POSTS_DATA.map((item: any) => {
 					return (
-						<span key={item.id}>
-							<i className={item.icon} /> {item.name}
-						</span>
+						<p key={item.id}>
+							<i className={item.icon} /> <span>{item.name}</span>
+						</p>
 					);
 				})}
 			</div>
@@ -75,6 +76,11 @@ const PostGlobal = styled.div`
 	box-shadow: inset 0px 0px 0px 1px rgb(190, 190, 190);
 	margin-bottom: 30px;
 
+	@media (max-width: 600px) {
+		width: 90%;
+		padding: 10px;
+	}
+
 	.PostHeader {
 		display: flex;
 		align-items: center;
@@ -91,12 +97,32 @@ const PostGlobal = styled.div`
 				background-size: contain;
 				border-radius: 50px;
 				margin: 10px 20px 10px 15px;
+
+				@media (max-width: 600px) {
+					width: 40px;
+					height: 40px;
+					border-radius: 40px;
+				}
+			}
+
+			p {
+				margin: 0;
+			}
+
+			span {
+				@media (max-width: 600px) {
+					display: none;
+				}
 			}
 		}
 	}
 
 	.PostContent {
 		display: flex;
+
+		@media (max-width: 900px) {
+			flex-direction: column;
+		}
 
 		.PostText {
 			width: 50%;
@@ -107,6 +133,10 @@ const PostGlobal = styled.div`
 			flex-direction: column;
 			justify-content: space-between;
 
+			@media (max-width: 900px) {
+				width: 100%;
+			}
+
 			p {
 				line-height: 1.6rem;
 				margin: 0;
@@ -116,10 +146,14 @@ const PostGlobal = styled.div`
 				border: none;
 				color: black;
 				background-color: rgb(240, 240, 240);
-				margin: 0px 10px 0px 0px;
+				margin: 5px 10px 0px 0px;
 				font-size: 1rem;
 				padding: 5px 10px;
 				border-radius: 10px;
+
+				@media (max-width: 600px) {
+					margin: 5px 5px 0px 0px;
+				}
 
 				&:hover {
 					cursor: pointer;
@@ -132,6 +166,10 @@ const PostGlobal = styled.div`
 			display: flex;
 			align-items: center;
 			justify-content: center;
+
+			@media (max-width: 900px) {
+				width: 100%;
+			}
 
 			.Image {
 				width: 80%;
@@ -167,11 +205,29 @@ const PostGlobal = styled.div`
 		}
 	}
 
-	.PostSeparation {
+	.PostSeparationHeader,
+	.PostSeparationContent,
+	.PostSeparationFooter {
 		height: 0.8px;
 		widtht: 100%;
 		border-radius: 2px;
 		background-color: rgb(200, 200, 200);
+	}
+
+	.PostSeparationHeader {
+		margin: 5px 0px 20px 0px;
+
+		@media (max-width: 600px) {
+			margin: 5px 0px 10px 0px;
+		}
+	}
+
+	.PostSeparationContent {
+		margin: 20px 0px 10px 0px;
+	}
+
+	.PostSeparationFooter {
+		margin: 10px 0px 10px 0px;
 	}
 
 	.PostFooter {
@@ -182,6 +238,16 @@ const PostGlobal = styled.div`
 
 		&:hover {
 			cursor: pointer;
+		}
+
+		p {
+			margin: 0;
+		}
+
+		span {
+			@media (max-width: 600px) {
+				display: none;
+			}
 		}
 
 		i {
