@@ -5,7 +5,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
-		"build": "next build && npx prisma db push --schema=src/prisma/schema.prisma",
+		"build": "npx prisma db push --schema=src/prisma/schema.prisma && next build",
 		"start": "next start",
 		"lint": "next lint"
 	},
