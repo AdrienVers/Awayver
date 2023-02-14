@@ -1,17 +1,34 @@
 import React from "react";
 import styled from "@emotion/styled";
-import User from "../../assets/user.png";
 import Image from "next/image";
 import Link from "next/link";
+import UserPicture from "../../assets/UserGreen.png";
+import { useSession, signOut } from "next-auth/react";
 
 function ChatNavbar() {
+	const { data: session } = useSession();
+
 	return (
 		<ChatNavbarGlobal>
 			<div className="ChatNavbarProfile">
 				<Link href="/conversations">
 					<i className="fa-solid fa-arrow-left" />
 				</Link>
-				<Image id="userProfile" src={User} alt="Profil" />
+				{session ? (
+					<Image
+						id="userProfile"
+						alt="imageUploded"
+						src={
+							session && session.user && typeof session.user.image === "string"
+								? session.user.image
+								: UserPicture
+						}
+						width={300}
+						height={300}
+					/>
+				) : (
+					<Image id="userProfile" alt="Utilisateur" src={UserPicture} />
+				)}
 			</div>
 			<div className="ChatNavbarName">
 				<h2>Nom</h2>

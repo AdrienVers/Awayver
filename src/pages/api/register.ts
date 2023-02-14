@@ -12,7 +12,7 @@ const validateEmail = (email: string): boolean => {
 	return regEx.test(email);
 };
 
-const validateForm = async (name: string, email: string, password: string) => {
+const validateForm = async (name: string, email: string, password: string, image: string) => {
 	if (name.length < 2) {
 		return { error: "Name must have 2 or more characters" };
 	}
@@ -45,9 +45,9 @@ export default async function handler(
 			.json({ error: "This API call only accepts POST methods" });
 	}
 
-	const { name, email, password } = req.body;
+	const { name, email, password, image } = req.body;
 
-	const errorMessage = await validateForm(name, email, password);
+	const errorMessage = await validateForm(name, email, password, image);
 	if (errorMessage) {
 		return res.status(400).json(errorMessage);
 	}
@@ -56,12 +56,12 @@ export default async function handler(
 		name,
 		email,
 		password,
+		image,
 	});
 
 	newUser
 		.save()
 		.then(() =>
-			//res.status(200).json({ msg: "Successfuly created new User: " + newUser }),
 			res.redirect("/connexion"),
 		)
 		.catch((err: string) =>

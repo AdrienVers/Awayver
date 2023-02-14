@@ -1,13 +1,30 @@
 import React from "react";
 import styled from "@emotion/styled";
-import User from "../../assets/user.png";
+import UserPicture from "../../assets/John.png";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 function TalksNavbar() {
+	const { data: session } = useSession();
+
 	return (
 		<TalksNavbarGlobal>
 			<div className="TalksNavbarProfile">
-				<Image id="userProfile" src={User} alt="Profil" />
+				{session ? (
+					<Image
+						id="userProfile"
+						alt="imageUploded"
+						src={
+							session && session.user && typeof session.user.image === "string"
+								? session.user.image
+								: UserPicture
+						}
+						width={300}
+						height={300}
+					/>
+				) : (
+					<Image id="userProfile" alt="Utilisateur" src={UserPicture} />
+				)}
 			</div>
 			<div className="TalksNavbarName">
 				<span>Discussions</span>
@@ -27,11 +44,11 @@ const TalksNavbarGlobal = styled.div`
 	display: flex;
 	width: 100%;
 	align-items: center;
-	padding: 5px 0px;
+	padding: 10px 0px 5px 0px;
 
 	.TalksNavbarProfile {
 		width: 30%;
-		max-width: 100px;
+		max-width: 110px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -47,6 +64,10 @@ const TalksNavbarGlobal = styled.div`
 	.TalksNavbarName {
 		width: calc(100% - 100px);
 		font-size: 1.25rem;
+
+		@media (max-width: 600px) {
+			width: calc(100% - 130px);
+		}
 	}
 
 	.TalksNavbarActions {

@@ -1,25 +1,36 @@
 import React from "react";
 import styled from "@emotion/styled";
 import Image from "next/image";
-import User from "../../assets/user.png";
 
-function TalkDisplay() {
+function TalkDisplay({ name, picture, content, hour, date, owner }: any) {
 	return (
 		<TalkDisplayGlobal>
 			<div className="TalkDisplayProfile">
-				<Image id="userProfile" src={User} alt="Profil" />
+				<Image id="userProfile" src={picture} alt="Profil" />
 			</div>
 			<div className="TalkDisplayName">
-				<h2>Nom</h2>
-				<p>Vous : Message</p>
+				<h2>{name}</h2>
+				<p>
+					{owner}{" "}
+					<span>
+						{content.length > 28 ? content.slice(0, 28) + "..." : content}
+					</span>
+				</p>
 			</div>
 			<div className="TalkDisplayDate">
-				<p style={{ margin: "0px 0px 3px 0px" }}>01/01/2023</p>
-				<p>12:11</p>
+				<div>
+					<span>{date}</span>
+				</div>
+				<div>
+					<span style={{ marginRight: "5px" }}>{hour}</span>
+					<i className="fa-solid fa-circle-check" />
+				</div>
 			</div>
+			{/*  
 			<div className="TalkDisplayStatus">
 				<i className="fa-solid fa-circle-check" />
 			</div>
+			*/}
 		</TalkDisplayGlobal>
 	);
 }
@@ -29,7 +40,12 @@ export default TalkDisplay;
 const TalkDisplayGlobal = styled.div`
 	display: flex;
 	width: 100%;
+	padding: 5px;
 	border-bottom: 1px rgb(190, 190, 190) solid;
+
+	@media (max-width: 900px) {
+		padding: 2px;
+	}
 
 	.TalkDisplayProfile {
 		width: 30%;
@@ -37,6 +53,11 @@ const TalkDisplayGlobal = styled.div`
 		display: flex;
 		justify-content: center;
 		align-items: center;
+
+		@media (max-width: 600px) {
+			max-width: 70px;
+			padding: 3px 0px;
+		}
 
 		#userProfile {
 			width: 100%;
@@ -61,6 +82,10 @@ const TalkDisplayGlobal = styled.div`
 
 		p {
 			margin: 0;
+
+			span {
+				color: rgb(100, 100, 100);
+			}
 		}
 	}
 
@@ -68,10 +93,19 @@ const TalkDisplayGlobal = styled.div`
 		display: flex;
 		align-items: end;
 		flex-direction: column;
-		padding: 5px 10px 5px 5px;
+		padding: 5px 10px 5px 10px;
 
-		p {
-			margin: 0;
+		span {
+			padding: 2px 0px;
+
+			@media (max-width: 900px) {
+				font-size: 0.9rem;
+			}
+		}
+
+		i {
+			color: rgb(51, 128, 109);
+			padding: 2px 0px;
 		}
 	}
 
@@ -80,7 +114,10 @@ const TalkDisplayGlobal = styled.div`
 		justify-content: center;
 		align-items: center;
 		color: rgb(51, 128, 109);
-		// padding: 8px 10px 0px 0px;
-		padding: 0px 10px 0px 0px;
+		padding: 0px 8px 0px 8px;
+
+		@media (max-width: 900px) {
+			padding: 0px 0px 0px 0px;
+		}
 	}
 `;

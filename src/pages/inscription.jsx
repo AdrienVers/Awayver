@@ -1,28 +1,81 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import styled from "@emotion/styled";
 import SignUpPicture from "../assets/SignInForm.png";
 import UserPicture from "../assets/UserGreen.png";
 import Image from "next/image";
 import Link from "next/link";
+import { PickerOverlay } from "filestack-react";
 
 function Inscription() {
+	const [isPicker, setIsPicker] = useState(false);
+	const [image, setImage] = useState("");
+
 	return (
 		<InscriptionGlobal>
 			<div className="SignUpFormContainer">
 				<div className="titleBox">
 					<h1 className="formTitle">Inscription</h1>
 				</div>
-				<div className="SampleProfile">
-					<Image
-						className="ProfilePicture"
-						src={UserPicture}
-						alt="Utilisateur"
-					/>
-					<button className="AddPicture">
-						<i className="fa-solid fa-circle-plus" />
-					</button>
-				</div>
 				<form action="/api/register" method="post">
+					{image ? (
+						<div className="SampleProfile">
+							<Image
+								className="ProfilePicture"
+								src={image && image.filesUploaded[0].url}
+								alt="imageUploded"
+								width={300}
+								height={300}
+							/>
+							<button className="AddPicture">
+								<i
+									className="fa-solid fa-circle-plus"
+									onClick={() => setIsPicker(true)}
+								/>
+							</button>
+							<input
+								type="text"
+								name="image"
+								value={image.filesUploaded[0].url}
+								onChange={(e) => setImage(e.target.value)}
+								style={{ display: "none" }}
+							/>
+						</div>
+					) : (
+						<div className="SampleProfile">
+							<Image
+								className="ProfilePicture"
+								src={UserPicture}
+								alt="Utilisateur"
+							/>
+							<button className="AddPicture">
+								<i
+									className="fa-solid fa-circle-plus"
+									onClick={() => setIsPicker(true)}
+								/>
+							</button>
+						</div>
+					)}
+					<div className="mt-4 relative">
+						{isPicker && (
+							<PickerOverlay
+								apikey={process.env.REACT_APP_FILESTACK_API_KEY}
+								onSuccess={(res) => {
+									setImage(res);
+									setIsPicker(false);
+								}}
+								onError={(res) => {
+									alert(res);
+								}}
+								pickerOptions={{
+									maxFiles: 1,
+									accept: ["image/*"],
+									errorsTimeout: 2000,
+									maxSize: 1 * 1000 * 1000,
+									onClose: () => setIsPicker(false),
+								}}
+							/>
+						)}
+					</div>
 					<div className="inputcontainer">
 						<input type="text" name="name" required />
 						<label htmlFor="name">{"Nom d'utilisateur"}</label>
@@ -106,9 +159,10 @@ const InscriptionGlobal = styled.div`
 			position: relative;
 
 			.ProfilePicture {
-				width: 70px;
-				height: auto;
+				width: 60px;
+				height: 60px;
 				border-radius: 50px;
+				object-fit: cover;
 			}
 
 			.AddPicture {

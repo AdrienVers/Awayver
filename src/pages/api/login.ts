@@ -23,5 +23,7 @@ export default async function handler(
 	}
 
 	res.redirect("/profil");
-	//res.status(200).json({ status: "Successfuly login with user: " + email });
 }
+
+//res.redirect("/profil");
+//res.status(200).json({ status: "Successfuly login with user: " + email });

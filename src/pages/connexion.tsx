@@ -1,4 +1,4 @@
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import React, { FormEventHandler, useState } from "react";
 import styled from "@emotion/styled";
 import SignInPicture from "../assets/SignUpForm.png";
@@ -7,6 +7,7 @@ import Link from "next/link";
 
 function Connexion() {
 	const [userInfo, setUserInfo] = useState({ email: "", password: "" });
+	const { data: session } = useSession();
 
 	const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
 		e.preventDefault();
@@ -21,59 +22,81 @@ function Connexion() {
 	};
 
 	return (
-		<ConnexionGlobal>
-			<div className="SignInIllustration">
-				<Image className="Picture" src={SignInPicture} alt="SignIn Picture" />
-			</div>
-			<div className="SignInFormContainer">
-				<div className="titleBox">
-					<h1 className="formTitle">Connexion</h1>
-					<p className="formSubTitle">Accès à votre compte</p>
-				</div>
-				<form onSubmit={handleSubmit} action="/api/login" method="post">
-					<div className="inputcontainer">
-						<input
-							type="email"
-							name="email"
-							required
-							value={userInfo.email}
-							onChange={(e) =>
-								setUserInfo({ ...userInfo, email: e.target.value })
-							}
-						/>
-						<label htmlFor="email">Adresse e-mail</label>
-					</div>
-					<div className="inputcontainer">
-						<input
-							type="password"
-							name="password"
-							required
-							value={userInfo.password}
-							onChange={(e) =>
-								setUserInfo({ ...userInfo, password: e.target.value })
-							}
-						/>
-						<label htmlFor="password">Mot de passe</label>
-						<button className="passwordVisibleButton">
-							<i className="fa-solid fa-eye" />
-						</button>
-					</div>
-					<button className="submitButton" type="submit">
-						Se connecter
-					</button>
-				</form>
-				<div className="GoToSignUp">
-					Pas encore de compte ?{" "}
-					<Link
-						style={{ color: "rgb(51, 128, 109)", fontWeight: "620" }}
-						href="/inscription"
-					>
-						{"S'inscrire."}
+		<>
+			{session ? (
+				<div className="NavbarButtons">
+					<Link href="/profil" legacyBehavior>
+						<div className="Login">
+							<a>
+								{session &&
+								session.user &&
+								typeof session.user.name === "string"
+									? session.user.name.charAt(0).toUpperCase() +
+									  session.user.name.slice(1)
+									: null}
+							</a>
+						</div>
 					</Link>
 				</div>
-			</div>
-			{/* <p>ICI rajouter un parahraphe lorsqu'on est connecté</p> */}
-		</ConnexionGlobal>
+			) : (
+				<ConnexionGlobal>
+					<div className="SignInIllustration">
+						<Image
+							className="Picture"
+							src={SignInPicture}
+							alt="SignIn Picture"
+						/>
+					</div>
+					<div className="SignInFormContainer">
+						<div className="titleBox">
+							<h1 className="formTitle">Connexion</h1>
+							<p className="formSubTitle">Accès à votre compte</p>
+						</div>
+						<form onSubmit={handleSubmit} action="/api/login" method="post">
+							<div className="inputcontainer">
+								<input
+									type="email"
+									name="email"
+									required
+									value={userInfo.email}
+									onChange={(e) =>
+										setUserInfo({ ...userInfo, email: e.target.value })
+									}
+								/>
+								<label htmlFor="email">Adresse e-mail</label>
+							</div>
+							<div className="inputcontainer">
+								<input
+									type="password"
+									name="password"
+									required
+									value={userInfo.password}
+									onChange={(e) =>
+										setUserInfo({ ...userInfo, password: e.target.value })
+									}
+								/>
+								<label htmlFor="password">Mot de passe</label>
+								<button className="passwordVisibleButton">
+									<i className="fa-solid fa-eye" />
+								</button>
+							</div>
+							<button className="submitButton" type="submit">
+								Se connecter
+							</button>
+						</form>
+						<div className="GoToSignUp">
+							Pas encore de compte ?{" "}
+							<Link
+								style={{ color: "rgb(51, 128, 109)", fontWeight: "620" }}
+								href="/inscription"
+							>
+								{"S'inscrire."}
+							</Link>
+						</div>
+					</div>
+				</ConnexionGlobal>
+			)}
+		</>
 	);
 }
 

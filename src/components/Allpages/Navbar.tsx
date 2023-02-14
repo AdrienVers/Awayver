@@ -5,7 +5,7 @@ import Logo from "../../assets/AwayverLogo.png";
 import Link from "next/link";
 import { NAVBAR_DATA_PHONE, NAVBAR_DATA_LAPTOP } from "./navbarData";
 import { useSession, signOut } from "next-auth/react";
-import UserImage from "../../assets/user.png";
+import UserImage from "../../assets/UserGreen.png";
 
 function Navbar() {
 	const { data: session } = useSession();
@@ -50,8 +50,16 @@ function Navbar() {
 										height: "45px",
 										borderRadius: "50px",
 									}}
-									src={UserImage}
+									src={
+										session &&
+										session.user &&
+										typeof session.user.image === "string"
+											? session.user.image
+											: UserImage
+									}
 									alt="user"
+									width={300}
+									height={300}
 								/>
 							</div>
 						</Link>

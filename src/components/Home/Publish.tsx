@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import Image from "next/image";
-import User from "../../assets/UserGreen.png";
+import User from "../../assets/John.png";
 import { PUBLISH_DATA } from "./publishData";
 
 function Publish() {
