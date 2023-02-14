@@ -4,7 +4,7 @@ import SignUpPicture from "../assets/SignInForm.png";
 import UserPicture from "../assets/UserGreen.png";
 import Image from "next/image";
 import Link from "next/link";
-import { PickerOverlay } from "filestack-react";
+// import { PickerOverlay } from "filestack-react";
 
 function Inscription() {
 	const [isPicker, setIsPicker] = useState(false);
@@ -57,6 +57,7 @@ function Inscription() {
 					)}
 					<div className="mt-4 relative">
 						{isPicker && (
+							/*
 							<PickerOverlay
 								apikey={process.env.NEXT_PUBLIC_API_KEY}
 								onSuccess={(res) => {
@@ -74,6 +75,8 @@ function Inscription() {
 									onClose: () => setIsPicker(false),
 								}}
 							/>
+							*/
+							<></>
 						)}
 					</div>
 					<div className="inputcontainer">

@@ -9,7 +9,7 @@ import {
 } from "../components/Home/publishData";
 import User from "../assets/UserGreen.png";
 import { useSession } from "next-auth/react";
-import { PickerOverlay } from "filestack-react";
+// import { PickerOverlay } from "filestack-react";
 
 function Home() {
 	const { data: session } = useSession();
@@ -232,6 +232,7 @@ function Home() {
 							</div>
 							<div className="mt-4 relative" style={{ backgroundColor: "red" }}>
 								{isPicker && (
+									/*
 									<PickerOverlay
 										apikey={process.env.NEXT_PUBLIC_API_KEY}
 										onSuccess={(res) => {
@@ -249,6 +250,8 @@ function Home() {
 											onClose: () => setIsPicker(false),
 										}}
 									/>
+									*/
+									<></>
 								)}
 							</div>
 						</div>
@@ -270,7 +273,6 @@ function Home() {
 				</PublishModale>
 			) : null}
 			<br />
-			<p>Salut , {REACT_APP_FILESTACK_API_KEY}</p>
 			<PublishGlobal>
 				<div className="ShareInput">
 					{session ? (
