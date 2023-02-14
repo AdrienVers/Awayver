@@ -58,7 +58,7 @@ function Inscription() {
 					<div className="mt-4 relative">
 						{isPicker && (
 							<PickerOverlay
-								apikey={process.env.REACT_APP_FILESTACK_API_KEY}
+								apikey={process.env.NEXT_PUBLIC_API_KEY}
 								onSuccess={(res) => {
 									setImage(res);
 									setIsPicker(false);

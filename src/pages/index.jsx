@@ -233,7 +233,7 @@ function Home() {
 							<div className="mt-4 relative" style={{ backgroundColor: "red" }}>
 								{isPicker && (
 									<PickerOverlay
-										apikey={process.env.REACT_APP_FILESTACK_API_KEY}
+										apikey={process.env.NEXT_PUBLIC_API_KEY}
 										onSuccess={(res) => {
 											setImage(res);
 											setIsPicker(false);
@@ -270,6 +270,7 @@ function Home() {
 				</PublishModale>
 			) : null}
 			<br />
+			<p>Salut , {REACT_APP_FILESTACK_API_KEY}</p>
 			<PublishGlobal>
 				<div className="ShareInput">
 					{session ? (
