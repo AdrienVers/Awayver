@@ -3,7 +3,13 @@ const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
 	images: {
-		domains: ["cdn.filestackcontent.com"],
+		domains: [
+			"wvyzjjfwnpsmzhxhcaly.supabase.co",
+			"cdn.filestackcontent.com",
+			"res.cloudinary.com",
+			"i.imgur.com",
+		],
+		// domains: ["i.imgur.com"],
 	},
 };
 
