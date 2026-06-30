@@ -31,6 +31,11 @@ export const NAVBAR_DATA_LAPTOP: NavbarDataLaptop[] = [
 		name: "Mes destinations",
 		path: "/carte",
 	},
+	{
+		id: 4,
+		name: "France",
+		path: "/france",
+	},
 ];
 
 export const NAVBAR_DATA_PHONE: NavbarDataPhone[] = [
@@ -66,6 +71,16 @@ export const NAVBAR_DATA_PHONE: NavbarDataPhone[] = [
 	},
 	{
 		id: 4,
+		name: "France",
+		path: "/france",
+		icon: "fa-solid fa-flag",
+		marginTop: "0px",
+		borderRadius: "5px",
+		height: "35px",
+		width: "35px",
+	},
+	{
+		id: 5,
 		name: "Mon profil",
 		path: "/profil",
 		icon: "fa-solid fa-user",

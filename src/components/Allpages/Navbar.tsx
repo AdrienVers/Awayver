@@ -3,12 +3,14 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 import Logo from "../../assets/AwayverLogo.png";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { NAVBAR_DATA_PHONE, NAVBAR_DATA_LAPTOP } from "./navbarData";
 import { useSession, signOut } from "next-auth/react";
 import UserImage from "../../assets/UserGreen.png";
 
 function Navbar() {
 	const { data: session } = useSession();
+	const router = useRouter();
 
 	console.log("la session :", session);
 
@@ -24,7 +26,13 @@ function Navbar() {
 					{NAVBAR_DATA_LAPTOP.map((item: any) => {
 						return (
 							<Link key={item.id} href={item.path} legacyBehavior>
-								<div className="LinkItem">
+								<div
+									className={
+										router.pathname === item.path
+											? "LinkItem active"
+											: "LinkItem"
+									}
+								>
 									<a>{item.name}</a>
 								</div>
 							</Link>
@@ -161,8 +169,17 @@ const NavbarGlobal = styled.div`
 				margin: 0px 20px;
 				white-space: nowrap;
 
+				a {
+					padding-bottom: 4px;
+					border-bottom: 2px solid transparent;
+				}
+
 				&:hover {
 					cursor: pointer;
+				}
+
+				&.active a {
+					border-bottom-color: white;
 				}
 			}
 		}
