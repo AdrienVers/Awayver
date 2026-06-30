@@ -1,7 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { db } from "../../../lib/memoryDb";
 
 type Data = {
 	title: string;
@@ -18,7 +16,7 @@ export default async function handler(
 ) {
 	if (req.method === "DELETE") {
 		const { id } = req.body;
-		const post = await prisma.post.delete({
+		const post = await db.post.delete({
 			where: {
 				id,
 			},

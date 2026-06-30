@@ -9,7 +9,6 @@ import {
 } from "../components/Home/publishData";
 import User from "../assets/UserGreen.png";
 import { useSession } from "next-auth/react";
-import { supabase } from "../utils/supabase";
 
 function Home() {
 	const { data: session } = useSession();
@@ -32,25 +31,15 @@ function Home() {
 	]);
 
 	const handleUpload = async (e) => {
-		let file;
+		const file = e.target.files?.[0];
+		if (!file) return;
 
-		if (e.target.files) {
-			file = e.target.files[0];
-		}
-
-		const { data, error } = await supabase.storage
-			.from("images")
-			.upload("public/" + file?.name, file);
-
-		if (data) {
-			const publicUrl = await supabase.storage
-				.from("images")
-				.getPublicUrl(data.path);
-			console.log(publicUrl);
-			setImageUrl(publicUrl.data.publicUrl);
-		} else if (error) {
-			console.log(error);
-		}
+		// Mock in-memory : on encode le fichier en data URL côté client,
+		// pas de stockage externe (Supabase) nécessaire.
+		const reader = new FileReader();
+		reader.onload = () => setImageUrl(reader.result);
+		reader.onerror = (err) => console.log(err);
+		reader.readAsDataURL(file);
 	};
 
 	const fetchData = async () => {

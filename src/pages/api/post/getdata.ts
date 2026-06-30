@@ -1,7 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { db } from "../../../lib/memoryDb";
 
 type Data = {
 	title: string;
@@ -16,6 +14,6 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse<Data[]>,
 ) {
-	const posts = await prisma.post.findMany();
+	const posts = await db.post.findMany();
 	res.status(200).json(posts);
 }
